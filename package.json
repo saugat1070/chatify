@@ -1,0 +1,12 @@
+{
+  "name": "chatlify",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build":"npm install --prefix Backend && npm install --prefix fronted && npm run build --prefix fronted",
+    "start": "npm run start --prefix Backend"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
