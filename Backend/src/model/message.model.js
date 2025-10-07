@@ -1,4 +1,3 @@
-import { text } from "express";
 import mongoose from "mongoose";
 
 const messageSchema = new mongoose.Schema({
@@ -12,7 +11,11 @@ const messageSchema = new mongoose.Schema({
         ref : "User",
         required : true
     },
-    text : String,
+    text : {
+        type : String,
+        trim : true,
+        maxlength : 2000
+    },
     image : String,
 },{timestamps : true});
 

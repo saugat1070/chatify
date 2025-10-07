@@ -103,3 +103,10 @@ export const updateProfile = async (req,res)=>{
     }
 
 }
+
+export const profile = async (req,res)=>{
+  const id = req.user?._id;
+  if(!id) return res.status(400).json({message:"please login first"});
+  const profile = await User.findOne({_id:id}).select("-password")
+  return res.status(200).json({data:profile})
+}
