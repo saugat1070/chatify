@@ -5,6 +5,7 @@ export const useAuthStore = create((set) => ({
     authUser: null,
     isCheckingAuth : true,
     isSignUp : false,
+    isLogin : false,
     checkAuth : async ()=>{
         try {
             // const res = await axios.get("http://localhost:3000/api/auth/check");
@@ -34,6 +35,22 @@ export const useAuthStore = create((set) => ({
         }
         finally{
             set({isSignUp : false})
+        }
+    },
+    login : async (formData)=>{
+        set({isLogin : true})
+        try {
+            const res = await axiosInstance.post("/auth/login",formData);
+            if(res.status == 200){
+                set({authUser : res.data})
+                toast.success("Login successfully 😉");
+            }
+        } catch (error) {
+            console.log(error)
+            toast.error(error?.response?.data?.message);
+        }
+        finally{
+            set({isLogin : false})
         }
     }
 }));
