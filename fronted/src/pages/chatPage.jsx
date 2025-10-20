@@ -5,10 +5,12 @@ import ProfileHeader from '../components/ProfileHeader';
 import ActiveTabSwitch from '../components/ActiveTabSwitch';
 import ChatList from '../components/ChatList';
 import ContactList from '../components/ContactList';
+import ChatContainer from '../components/ChatContainer';
+import NoConversationPlaceholder from '../components/NoConversationPlaceholder';
 
 
 function ChatPage() {
-  const {activeTab} = useChatStore();
+  const {activeTab,selectedUser} = useChatStore();
   return (
     <div className='relative w-full max-w-6xl h-[800px]'>
       <BorderAnimatedContainer>
@@ -21,6 +23,11 @@ function ChatPage() {
           >
             {activeTab === "chats" ? <ChatList/> : <ContactList/>}
           </div>
+        </div>
+
+        {/* Right Side */}
+        <div className='flex-1 flex flex-col bg-slate-900/50 backdrop-blur-smz'>
+        {selectedUser ? <ChatContainer/> : <NoConversationPlaceholder/>}
         </div>
       </BorderAnimatedContainer>
     </div>
