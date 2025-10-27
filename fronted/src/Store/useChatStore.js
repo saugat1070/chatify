@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { axiosInstance } from "../lib/axios";
 import toast from "react-hot-toast";
 
-export const useChatStore = create((get,set)=>({
+export const useChatStore = create((set,get)=>({
     allContacts : [],
     chats : [],
     messages : [],
@@ -10,11 +10,12 @@ export const useChatStore = create((get,set)=>({
     selectedUser : null,
     isUserLoading : false,
     isMessagesLoading : false,
-    isSoundEnble : localStorage.getItem("isSoundedEnbles") === true,
+    isSoundEnabled : JSON.parse(localStorage.getItem("isSoundEnabled") || "false"),
 
     toggleSound : ()=>{
-        localStorage.setItem("isSoundedEnbles",!get().isSoundedEnbles)
-        set({isSoundEnble: !get().isSoundedEnbles})
+        let toggleValue = get().isSoundEnabled;
+        localStorage.setItem("isSoundEnabled",JSON.stringify(!toggleValue))
+        set({isSoundEnabled: !toggleValue});
     },
 
     setActiveTab : (activeTab)=> set({activeTab:activeTab}),
