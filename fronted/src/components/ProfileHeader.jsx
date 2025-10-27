@@ -39,7 +39,7 @@ export default function ProfileHeader() {
     logout()
     Swal.fire({
       title: "Logout success!",
-      text: "Your account has been removed.",
+      text: "You have been removed.",
       icon: "success"
     });
   }

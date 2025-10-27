@@ -54,7 +54,6 @@ export const useAuthStore = create((set) => ({
         }
     },
     logout:async ()=>{
-        console.log("hey its me")
         try {
             const res = await axiosInstance.post("/auth/logout");
             if(res.status == 200){
