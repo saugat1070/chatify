@@ -13,6 +13,8 @@ AuthRouter.post("/login",login);
 AuthRouter.post("/logout",logout);
 AuthRouter.route("/profile").patch(protectedRoute,upload.single("profileImage"),updateProfile).get(protectedRoute,profile)
 
+
+
 AuthRouter.get("/test",arcjetProtection,(_,res)=>{
     return res.json({message:"testing arcjet routing"})
 })

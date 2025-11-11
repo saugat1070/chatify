@@ -46,7 +46,7 @@ class MessageController{
     async getMessage(req,res){
         const myId = req.user?._id;
         const {id : userToChatId} = req.params;
-        if(!myId || !id){return res.status(400).json({message:"id must be provided"})}
+        if(!myId || !userToChatId){return res.status(400).json({message:"id must be provided"})}
         try {
             const message = await Message.find({
                 $or : [

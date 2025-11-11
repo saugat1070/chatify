@@ -4,21 +4,21 @@ import messageRouter from "./Routes/message.route.js";
 import path from "path";
 import { connectDb } from "./config/connectionDb.js";
 import cookieParser from "cookie-parser"
-
+import cors from "cors"
 const app = express();
 
-// Middleware
+// Global Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser())
-
+app.use(cors({
+    origin : "http://localhost:5173",
+    credentials : true     // allow cookies/auth headers
+}))
 //For Routing
 app.use("/api/auth",AuthRouter);
 app.use("/api/messages",messageRouter);
 
-app.get("/",(_,res)=>{
-    res.status(200).json({message:"starting"})
-})
 
 //for deployment
 const __dirname = path.resolve();
