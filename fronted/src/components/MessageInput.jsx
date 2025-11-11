@@ -42,6 +42,7 @@ export default function MessageInput() {
   };
   const removeImg = ()=>{
     setImgPreview(null);
+    setImage(null)
     if(fileInputRef.current) fileInputRef.current.value = "";
 
   }
@@ -76,7 +77,7 @@ export default function MessageInput() {
         type="text"
         value={text}
         onChange={(e)=>{
-          setText(()=> e.target.value);
+          setText(e.target.value);
           isSoundEnabled && playRandomKeyStrokeSound();
         }}
         className="flex-1 bg-slate-800/50 border border-slate-700/50 rounded-lg py-2 px-2"
