@@ -62,20 +62,22 @@ class MessageController{
     }
     async sendMessage(req,res){
         try {
-            const {text,image} = req.body;
+            
+            const {text} = req.body;
+            const image = req.file;
             const {id : receiverId} = req.params;
             const senderId = req.user?._id;
             // console.log(`sender:${senderId} and receiver:${receiverId}`)
             if(!receiverId || !senderId){return res.status(401).json({message:"id must be provided"})};
             let imageUrl;
             if(image){
-                const uploadResponse = await cloudinary.uploader.upload(image,{
+                const uploadResponse = await cloudinary.uploader.upload(image?.path,{
                     folder : "MessageImage"
                 })
                 imageUrl = uploadResponse.secure_url || "";
             }
             const newMessage = new Message({text:text,senderId:senderId,receiverId:receiverId,image:imageUrl});
-            await newMessage.save();
+            await newMessage.save()
 
             res.status(200).json(newMessage);
         } catch (error) {
