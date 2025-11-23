@@ -2,6 +2,7 @@
 import { User } from "../model/ auth.model.js";
 import Message from "../model/message.model.js";
 import cloudinary from "../utils/cloudinary.js";
+import { getRecevierSocketId, io } from "../utils/socket.js";
 class MessageController{
     async getAllContacts(req,res) {
         const loggedInUser = req.user?.id;
@@ -79,6 +80,8 @@ class MessageController{
             }
             const newMessage = new Message({text:text,senderId:senderId,receiverId:receiverId,image:imageUrl});
             await newMessage.save()
+            const receiverSocketId = getRecevierSocketId(receiverId);
+            io.to(receiverSocketId).emit("newMessage",newMessage);
 
             res.status(200).json(newMessage);
         } catch (error) {
