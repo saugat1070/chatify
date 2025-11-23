@@ -105,7 +105,6 @@ export const useAuthStore = create((set,get) => ({
         });
 
         socket.connect();
-        console.log("socket2:",socket)
         set({socket:socket});
         //listen for online users event
         socket.on("getOnlineUsers",(userIds)=>{

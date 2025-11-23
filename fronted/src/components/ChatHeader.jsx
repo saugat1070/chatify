@@ -4,6 +4,7 @@ import { XIcon } from "lucide-react";
 
 export default function ChatHeader() {
   const { selectedUser, setSelectedUser } = useChatStore();
+  //todo: Implement online and offline indicator
   useEffect(()=>{
     const handleEscKey = (event)=>{
         if(event.key === "Escape") setSelectedUser(null)
