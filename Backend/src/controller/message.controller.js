@@ -69,6 +69,7 @@ class MessageController{
             const senderId = req.user?._id;
             // console.log(`sender:${senderId} and receiver:${receiverId}`)
             if(!receiverId || !senderId){return res.status(401).json({message:"id must be provided"})};
+            if(senderId.equals(receiverId)) return res.json({message:"user can't send message to itself"})
             let imageUrl;
             if(image){
                 const uploadResponse = await cloudinary.uploader.upload(image?.path,{
