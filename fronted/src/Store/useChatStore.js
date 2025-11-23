@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { axiosInstance } from "../lib/axios";
 import toast from "react-hot-toast";
+import { useAuthStore } from "./userAuth";
 
 export const useChatStore = create((set, get) => ({
   allContacts: [],
@@ -69,13 +70,38 @@ export const useChatStore = create((set, get) => ({
           },
         }
       );
-      
+
       if (res.data) {
         set({ messages: [...messages, res.data] });
       }
-      
     } catch (error) {
       toast.error(error?.response?.data?.message || "Something went wrong");
     }
+  },
+  subscribeToMessage: async () => {
+    try {
+      const { socket } = useAuthStore.getState();
+      //it only allow to message between sender and receiver
+      socket.on("newMessage", (newMessage) => {
+        if (newMessage?.senderId != get().selectedUser?._id) return;
+        if (get().isSoundEnabled) {;
+        const notificationSound = new Audio("/sounds/notification.mp3");
+        notificationSound.currentTime = 0;
+        notificationSound
+          .play()
+          .catch((err) =>
+            console.log(`Error at playing notification music:${err?.message}`)
+          );
+        }
+        return set({ messages: [...get().messages, newMessage] });
+      });
+    } catch (error) {
+      toast.error(error?.message);
+    }
+  },
+
+  unsubscribeToMessage: async () => {
+    const { socket } = useAuthStore.getState();
+    socket.off("newMessage");
   },
 }));

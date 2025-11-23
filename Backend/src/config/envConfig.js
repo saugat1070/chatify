@@ -4,6 +4,7 @@ dotenv.config({
     path: "./.env.local"
 });
 export const envConfig = {
+    clientUrl : process.env.CLIENT_URL,
     portNumber : process.env.PORT_NUMBER,
     mongo_url : process.env.MONGO_URL,
     jwt_secret : process.env.JWT_SECRET,

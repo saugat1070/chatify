@@ -7,11 +7,16 @@ import { useAuthStore } from './Store/userAuth';
 import PageLoader from './components/PageLoader';
 import {Toaster} from "react-hot-toast";
 function App() {
-  const {checkAuth,isCheckingAuth,authUser} = useAuthStore();
+  const {checkAuth,isCheckingAuth,authUser,connectSocket} = useAuthStore();
+  // window.addEventListener("load",()=>{
+  //   if(document.cookie.includes("token=")){
+  //     connectSocket()
+  //   }
+  // }
 
   useEffect(()=>{
     checkAuth();
-  },[checkAuth])
+  },[checkAuth]);
 
   if(isCheckingAuth) return <PageLoader/>
   return (
